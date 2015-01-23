@@ -8,5 +8,8 @@ return array(
                 'handler' => 'Some\Handler\Class',
             ),
         ),
+        'listeners' => array(
+            'Some/Listener/Class',
+        ),
     ),
 );

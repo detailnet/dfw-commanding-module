@@ -12,6 +12,11 @@ class ModuleOptions extends AbstractOptions
     protected $commands = array();
 
     /**
+     * @var array
+     */
+    protected $listeners = array();
+
+    /**
      * @return array
      */
     public function getCommands()
@@ -25,5 +30,21 @@ class ModuleOptions extends AbstractOptions
     public function setCommands(array $commands)
     {
         $this->commands = $commands;
+    }
+
+    /**
+     * @return array
+     */
+    public function getListeners()
+    {
+        return $this->listeners;
+    }
+
+    /**
+     * @param array $listeners
+     */
+    public function setListeners(array $listeners)
+    {
+        $this->listeners = $listeners;
     }
 }

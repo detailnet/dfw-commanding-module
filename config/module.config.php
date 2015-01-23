@@ -28,5 +28,7 @@ return array(
     'detail_commanding' => array(
         'commands' => array(
         ),
+        'listeners' => array(
+        ),
     ),
 );

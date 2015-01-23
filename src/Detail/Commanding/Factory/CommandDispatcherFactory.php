@@ -42,6 +42,15 @@ class CommandDispatcherFactory implements FactoryInterface
             $commandDispatcher->register($command['command'], $command['handler']);
         }
 
+        $listeners = $moduleOptions->getListeners();
+
+        foreach ($listeners as $listener) {
+            /** @todo Lazy load listeners? */
+            $commandDispatcher->getEventManager()->attach(
+                $serviceLocator->get($listener)
+            );
+        }
+
         return $commandDispatcher;
     }
 }

@@ -16,6 +16,8 @@ class ModuleOptionsTest extends OptionsTestCase
             array(
                 'getCommands',
                 'setCommands',
+                'getListeners',
+                'setListeners',
             )
         );
     }
@@ -35,5 +37,19 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->options->setCommands($commands);
 
         $this->assertEquals($commands, $this->options->getCommands());
+    }
+
+    public function testListenersCanBeSet()
+    {
+        $listeners = array(
+            'Some/Listener/Class',
+        );
+
+        $this->assertTrue(is_array($this->options->getListeners()));
+        $this->assertEmpty($this->options->getListeners());
+
+        $this->options->setListeners($listeners);
+
+        $this->assertEquals($listeners, $this->options->getListeners());
     }
 }

@@ -33,13 +33,13 @@ class LoggingListener extends BaseLoggingListener
         );
     }
 
-//    public function onPreHandle(CommandDispatcherEvent $e)
+//    public function onPreHandle(CommandDispatcherEvent $event)
 //    {
 //    }
 
-    public function onHandle(CommandDispatcherEvent $e)
+    public function onHandle(CommandDispatcherEvent $event)
     {
-        $commandName = $e->getParam(CommandDispatcherEvent::PARAM_COMMAND_NAME, 'unknown command');
+        $commandName = $event->getParam(CommandDispatcherEvent::PARAM_COMMAND_NAME, 'unknown command');
 
 //        /** @var CommandInterface $command */
 //        $command = $e->getParam(CommandDispatcherEvent::PARAM_COMMAND);
