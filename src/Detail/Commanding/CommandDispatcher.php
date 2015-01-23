@@ -5,7 +5,7 @@ namespace Detail\Commanding;
 use ArrayObject;
 
 use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
+//use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
 
 use Detail\Commanding\Command\CommandInterface;

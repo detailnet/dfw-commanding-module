@@ -6,7 +6,6 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Detail\Commanding\CommandDispatcher;
-use Detail\Commanding\CommandHandlerManager;
 
 class CommandDispatcherFactory implements FactoryInterface
 {
@@ -15,7 +14,8 @@ class CommandDispatcherFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $commandHandlerManager = new CommandHandlerManager();
+        /** @var \Detail\Commanding\CommandHandlerManager $commandHandlerManager */
+        $commandHandlerManager = $serviceLocator->get('Detail\Commanding\CommandHandlerManager');
         $commandHandlerManager->setServiceLocator($serviceLocator);
 
         $commandDispatcher = new CommandDispatcher($commandHandlerManager);
