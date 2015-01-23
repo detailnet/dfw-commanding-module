@@ -14,22 +14,20 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->options = $this->getOptions(
             'Detail\Commanding\Options\ModuleOptions',
             array(
-                'getNormalizer',
-                'setNormalizer',
-                'getJobBuilder',
-                'setJobBuilder',
+//                'getNormalizer',
+//                'setNormalizer',
             )
         );
     }
 
-    public function testNormalizerCanBeSet()
-    {
-        $normalizer = 'Some\Normalizer\Class';
-
-        $this->assertNull($this->options->getNormalizer());
-
-        $this->options->setNormalizer($normalizer);
-
-        $this->assertEquals($normalizer, $this->options->getNormalizer());
-    }
+//    public function testNormalizerCanBeSet()
+//    {
+//        $normalizer = 'Some\Normalizer\Class';
+//
+//        $this->assertNull($this->options->getNormalizer());
+//
+//        $this->options->setNormalizer($normalizer);
+//
+//        $this->assertEquals($normalizer, $this->options->getNormalizer());
+//    }
 }
