@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\Core\Commanding\Listener;
+namespace Detail\Commanding\Listener;
 
 use Psr\Log\LogLevel;
 
 use Zend\EventManager\EventManagerInterface;
 
-//use Application\Core\Commanding\Command\CommandInterface;
-use Application\Core\Commanding\CommandDispatcherEvent;
+//use Detail\Commanding\Command\CommandInterface;
+use Detail\Commanding\CommandDispatcherEvent;
 use Application\Core\Log\Listener\BaseLoggingListener;
 
 class LoggingListener extends BaseLoggingListener

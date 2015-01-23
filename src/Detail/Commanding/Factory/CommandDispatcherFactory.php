@@ -5,8 +5,8 @@ namespace Application\Core\Commanding\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-use Application\Core\Commanding\CommandDispatcher;
-use Application\Core\Commanding\CommandHandlerManager;
+use Detail\Commanding\CommandDispatcher;
+use Detail\Commanding\CommandHandlerManager;
 
 class CommandDispatcherFactory implements FactoryInterface
 {
