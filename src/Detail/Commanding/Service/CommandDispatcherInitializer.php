@@ -1,12 +1,10 @@
 <?php
 
-namespace Detail\Commanding\Commanding\Service;
+namespace Detail\Commanding\Service;
 
 use Zend\ServiceManager\InitializerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-
-use Detail\Commanding\Service\CommandDispatcherAwareInterface;
 
 class CommandDispatcherInitializer implements
     InitializerInterface

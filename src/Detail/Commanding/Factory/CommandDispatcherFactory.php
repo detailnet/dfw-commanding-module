@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\Commanding\Factory;
+namespace Detail\Commanding\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -35,7 +35,7 @@ class CommandDispatcherFactory implements FactoryInterface
 
             if (!isset($command['handler'])) {
                 throw new Exception\ConfigException(
-                    'Command is missing required configuration option "command"'
+                    'Command is missing required configuration option "handler"'
                 );
             }
 
