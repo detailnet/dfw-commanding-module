@@ -8,7 +8,7 @@ use Zend\EventManager\EventManagerInterface;
 
 //use Detail\Commanding\Command\CommandInterface;
 use Detail\Commanding\CommandDispatcherEvent;
-use Application\Core\Log\Listener\BaseLoggingListener;
+use Detail\Log\Listener\BaseLoggingListener;
 
 class LoggingListener extends BaseLoggingListener
 {

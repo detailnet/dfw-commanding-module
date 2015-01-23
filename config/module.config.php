@@ -20,6 +20,11 @@ return array(
         'shared' => array(
         ),
     ),
+    'controllers' => array(
+        'initializers' => array(
+            'Detail\Commanding\Service\CommandDispatcherInitializer',
+        ),
+    ),
     'detail_commanding' => array(
     ),
 );

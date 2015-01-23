@@ -27,7 +27,7 @@
         "zendframework/zend-mvc": "2.*",
         "zendframework/zend-servicemanager": "2.*",
         "detailnet/dfw-core": "~0.1.1",
-        "detailnet/dfw-log": "~0.1.1",
+        "detailnet/dfw-log-module": "~0.2.0",
         "detailnet/dfw-commanding": "~0.1.0"
     },
     "require-dev": {

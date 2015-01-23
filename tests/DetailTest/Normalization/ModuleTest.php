@@ -36,7 +36,7 @@ class ModuleTest extends TestCase
         $this->assertTrue(is_array($config));
         $this->assertArrayHasKey('detail_commanding', $config);
         $this->assertTrue(is_array($config['detail_commanding']));
-        $this->assertArrayHasKey('normalizer', $config['detail_commanding']);
+//        $this->assertArrayHasKey('normalizer', $config['detail_commanding']);
 //        $this->assertEquals(
 //            'Detail\Commanding\Normalizer\JMSSerializerBasedNormalizer',
 //            $config['detail_commanding']['normalizer']
