@@ -27,7 +27,9 @@ class LoggingListener extends BaseLoggingListener
 //        );
 
         $this->listeners[] = $events->attach(
-            CommandDispatcherEvent::EVENT_HANDLE, array($this, 'onHandle'), $priority
+            CommandDispatcherEvent::EVENT_HANDLE,
+            array($this, 'onHandle'),
+            $priority
         );
     }
 

@@ -3,6 +3,7 @@
 namespace Detail\Commanding;
 
 use Zend\EventManager\Event;
+
 //use Zend\Stdlib\Parameters;
 
 class CommandDispatcherEvent extends Event

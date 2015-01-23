@@ -2,5 +2,11 @@
 
 return array(
     'detail_commanding' => array(
+        'commands' => array(
+            array(
+                'command' => 'Some\Command\Class',
+                'handler' => 'Some\Handler\Class',
+            ),
+        ),
     ),
 );

@@ -8,7 +8,6 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-//use Zend\Mvc\MvcEvent;
 
 class Module implements
     AutoloaderProviderInterface,
@@ -16,12 +15,6 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
-//    public function onBootstrap(MvcEvent $event)
-//    {
-//        /** @var \Zend\ServiceManager\ServiceManager $serviceManager */
-//        $serviceManager = $event->getApplication()->getServiceManager();
-//    }
-
     /**
      * {@inheritdoc}
      */
