@@ -119,7 +119,7 @@ class CommandDispatcher implements
         $events = $this->getEventManager();
 
         $preEvent = $this->prepareEvent(CommandDispatcherEvent::EVENT_PRE_HANDLE, $preEventParams);
-        $events->triggerUntil($preEvent, function ($result) {
+        $events->trigger($preEvent, function ($result) {
             // Don't handle the command when a listener returns false
             return ($result === false);
         });
