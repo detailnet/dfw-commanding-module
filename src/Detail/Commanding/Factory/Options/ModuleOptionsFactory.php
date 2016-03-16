@@ -18,7 +18,7 @@ class ModuleOptionsFactory implements FactoryInterface
     {
         $config = $serviceLocator->get('Config');
 
-        if (!isset($config['detail_normalization'])) {
+        if (!isset($config['detail_commanding'])) {
             throw new ConfigException('Config for Detail\Commanding is not set');
         }
 

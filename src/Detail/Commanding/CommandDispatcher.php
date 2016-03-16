@@ -92,6 +92,11 @@ class CommandDispatcher implements
         return $this->eventParams;
     }
 
+    /**
+     * @param string $commandName
+     * @param CommandHandlerInterface|string $commandHandler
+     * @return void
+     */
     public function register($commandName, $commandHandler)
     {
         if ($commandHandler instanceof CommandHandlerInterface) {
@@ -101,7 +106,11 @@ class CommandDispatcher implements
         }
     }
 
-    public function handle(CommandInterface $command)
+    /**
+     * @param CommandInterface $command
+     * @return mixed
+     */
+    public function dispatch(CommandInterface $command)
     {
         $commandName = $this->getCommandName($command);
 
@@ -116,13 +125,17 @@ class CommandDispatcher implements
             CommandDispatcherEvent::PARAM_COMMAND => $command,
         );
 
-        $events = $this->getEventManager();
+        $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_DISPATCH, $preEventParams);
 
-        $preEvent = $this->prepareEvent(CommandDispatcherEvent::EVENT_PRE_HANDLE, $preEventParams);
-        $events->trigger($preEvent, function ($result) {
-            // Don't handle the command when a listener returns false
-            return ($result === false);
-        });
+        /** @todo Remove when we can break backwards compatibility */
+        if ($continueDispatch) {
+            $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_HANDLE, $preEventParams);
+        }
+
+        if (!$continueDispatch) {
+            /** @todo Should probably trigger an abort event */
+            return null;
+        }
 
         $commandHandler = $this->commandHandlers->get($commandName);
         $commandHandlerResult = $commandHandler->handle($command);
@@ -134,12 +147,27 @@ class CommandDispatcher implements
             )
         );
 
-        $postEvent = $this->prepareEvent(CommandDispatcherEvent::EVENT_HANDLE, $postEventParams);
-        $events->trigger($postEvent);
+        $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_DISPATCH, $postEventParams);
+        /** @todo Remove when we can break backwards compatibility */
+        $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_HANDLE, $postEventParams);
 
         return $commandHandlerResult;
     }
 
+    /**
+     * @param CommandInterface $command
+     * @return mixed
+     * @deprecated Use dispatch()
+     */
+    public function handle(CommandInterface $command)
+    {
+        return $this->dispatch($command);
+    }
+
+    /**
+     * @param CommandInterface $command
+     * @return string
+     */
     protected function getCommandName(CommandInterface $command)
     {
         $className = get_class($command);
@@ -151,6 +179,37 @@ class CommandDispatcher implements
 //        return $classNameParts[count($classNameParts) - 1];
     }
 
+    /**
+     * @param string $name
+     * @param array $params
+     * @return boolean
+     */
+    protected function triggerPreDispatchEvent($name, array $params = array())
+    {
+        $preEvent = $this->prepareEvent($name, $params);
+        $results = $this->getEventManager()->trigger($preEvent, function ($result) {
+            // Don't dispatch the command when a listener returns false
+            return ($result === false);
+        });
+
+        return $results->last() !== false;
+    }
+
+    /**
+     * @param string $name
+     * @param array $params
+     */
+    protected function triggerPostDispatchEvent($name, array $params = array())
+    {
+        $postEvent = $this->prepareEvent($name, $params);
+        $this->getEventManager()->trigger($postEvent);
+    }
+
+    /**
+     * @param string $name
+     * @param array $params
+     * @return CommandDispatcherEvent
+     */
     protected function prepareEvent($name, array $params)
     {
         $event = new CommandDispatcherEvent($name, $this, $this->prepareEventParams($params));

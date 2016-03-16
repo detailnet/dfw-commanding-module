@@ -27,23 +27,26 @@ class LoggingListener extends BaseLoggingListener
 //        );
 
         $this->listeners[] = $events->attach(
-            CommandDispatcherEvent::EVENT_HANDLE,
-            array($this, 'onHandle'),
+            CommandDispatcherEvent::EVENT_DISPATCH,
+            array($this, 'onDispatch'),
             $priority
         );
     }
 
-//    public function onPreHandle(CommandDispatcherEvent $event)
+//    public function onPreDispatch(CommandDispatcherEvent $event)
 //    {
 //    }
 
-    public function onHandle(CommandDispatcherEvent $event)
+    /**
+     * @param CommandDispatcherEvent $event
+     */
+    public function onDispatch(CommandDispatcherEvent $event)
     {
         $commandName = $event->getParam(CommandDispatcherEvent::PARAM_COMMAND_NAME, 'unknown command');
 
 //        /** @var CommandInterface $command */
 //        $command = $e->getParam(CommandDispatcherEvent::PARAM_COMMAND);
 
-        $this->log(sprintf('Command "%s" was handled', $commandName), LogLevel::DEBUG);
+        $this->log(sprintf('Command "%s" was dispatched', $commandName), LogLevel::DEBUG);
     }
 }
