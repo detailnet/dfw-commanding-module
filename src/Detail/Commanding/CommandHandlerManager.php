@@ -6,7 +6,6 @@ use Zend\ServiceManager;
 
 use Detail\Commanding\Handler\CommandHandlerInterface;
 use Detail\Commanding\Exception;
-use Detail\Commanding\Service\CommandDispatcherInitializer;
 
 /**
  * Plugin manager implementation for command handlers.
@@ -21,16 +20,6 @@ class CommandHandlerManager extends ServiceManager\AbstractPluginManager
      * @var bool
      */
     protected $shareByDefault = false;
-
-    /**
-     * @param ServiceManager\ConfigInterface|null $configuration
-     */
-    public function __construct(ServiceManager\ConfigInterface $configuration = null)
-    {
-        parent::__construct($configuration);
-
-        $this->addInitializer(new CommandDispatcherInitializer());
-    }
 
     /**
      * {@inheritDoc}
