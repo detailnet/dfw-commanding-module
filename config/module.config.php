@@ -10,9 +10,9 @@ return array(
         ),
         'factories' => array(
             'Detail\Commanding\Listener\LoggingListener' => 'Detail\Commanding\Factory\Listener\LoggingListenerFactory',
-            'Detail\Commanding\CommandDispatcher'        => 'Detail\Commanding\Factory\CommandDispatcherFactory',
-            'Detail\Commanding\CommandHandlerManager'    => 'Detail\Commanding\Factory\CommandHandlerManagerFactory',
-            'Detail\Commanding\Options\ModuleOptions'    => 'Detail\Commanding\Factory\Options\ModuleOptionsFactory',
+            'Detail\Commanding\CommandDispatcher' => 'Detail\Commanding\Factory\CommandDispatcherFactory',
+            'Detail\Commanding\CommandHandlerManager' => 'Detail\Commanding\Factory\CommandHandlerManagerFactory',
+            'Detail\Commanding\Options\ModuleOptions' => 'Detail\Commanding\Factory\Options\ModuleOptionsFactory',
         ),
         'initializers' => array(
             'Detail\Commanding\Service\CommandDispatcherInitializer',
@@ -26,6 +26,11 @@ return array(
         ),
     ),
     'detail_commanding' => array(
+        'command_handler_manager' => array(
+            'initializers' => array(
+                'Detail\Commanding\Service\CommandDispatcherInitializer',
+            ),
+        ),
         'commands' => array(
         ),
         'listeners' => array(

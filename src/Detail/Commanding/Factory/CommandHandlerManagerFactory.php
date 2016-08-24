@@ -6,20 +6,20 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Detail\Commanding\CommandHandlerManager;
-use Detail\Commanding\Exception;
-use Detail\Commanding\Service\CommandDispatcherInitializer;
+use Detail\Commanding\Options\ModuleOptions;
 
 class CommandHandlerManagerFactory implements
     FactoryInterface
 {
     /**
      * {@inheritDoc}
+     * @return CommandHandlerManager
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $manager = new CommandHandlerManager($serviceLocator);
-        $manager->addInitializer(new CommandDispatcherInitializer());
+        /** @var ModuleOptions $moduleOptions */
+        $moduleOptions = $serviceLocator->get(ModuleOptions::CLASS);
 
-        return $manager;
+        return new CommandHandlerManager($serviceLocator, $moduleOptions->getCommandHandlerManager());
     }
 }
