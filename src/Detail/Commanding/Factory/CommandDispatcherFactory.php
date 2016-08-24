@@ -2,6 +2,7 @@
 
 namespace Detail\Commanding\Factory;
 
+use Zend\EventManager\ListenerAggregateInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -44,11 +45,11 @@ class CommandDispatcherFactory implements FactoryInterface
 
         $listeners = $moduleOptions->getListeners();
 
-        foreach ($listeners as $listener) {
+        foreach ($listeners as $listenerName) {
             /** @todo Lazy load listeners? */
-            $commandDispatcher->getEventManager()->attach(
-                $serviceLocator->get($listener)
-            );
+            /** @var ListenerAggregateInterface $listener */
+            $listener = $serviceLocator->get($listenerName);
+            $listener->attach($commandDispatcher->getEventManager());
         }
 
         return $commandDispatcher;

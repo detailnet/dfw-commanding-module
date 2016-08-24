@@ -224,7 +224,7 @@ class CommandDispatcher implements
      * Ensures event parameters are created as an array object, allowing them to be modified
      * by listeners and retrieved.
      *
-     * @param  array $params
+     * @param array $params
      * @return ArrayObject
      */
     protected function prepareEventParams(array $params)
