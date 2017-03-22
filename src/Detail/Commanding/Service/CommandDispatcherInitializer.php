@@ -2,29 +2,27 @@
 
 namespace Detail\Commanding\Service;
 
-use Zend\ServiceManager\InitializerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Initializer\InitializerInterface;
+
+use Detail\Commanding\CommandDispatcher;
 
 class CommandDispatcherInitializer implements
     InitializerInterface
 {
     /**
-     * Initialize
+     * Initialize the given instance
      *
-     * @param $instance
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param ContainerInterface $container
+     * @param object $instance
+     * @return void
      */
-    public function initialize($instance, ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $instance)
     {
         if ($instance instanceof CommandDispatcherAwareInterface) {
-            if ($serviceLocator instanceof ServiceLocatorAwareInterface) {
-                $serviceLocator = $serviceLocator->getServiceLocator();
-            }
-
-            /** @var \Detail\Commanding\CommandDispatcher $commandDispatcher */
-            $commandDispatcher = $serviceLocator->get('Detail\Commanding\CommandDispatcher');
+            /** @var CommandDispatcher $commandDispatcher */
+            $commandDispatcher = $container->get(CommandDispatcher::CLASS);
 
             $instance->setCommands($commandDispatcher);
         }

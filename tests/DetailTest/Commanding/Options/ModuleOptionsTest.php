@@ -2,17 +2,19 @@
 
 namespace DetailTest\Commanding\Options;
 
+use Detail\Commanding\Options\ModuleOptions;
+
 class ModuleOptionsTest extends OptionsTestCase
 {
     /**
-     * @var \Detail\Commanding\Options\ModuleOptions
+     * @var ModuleOptions
      */
     protected $options;
 
     protected function setUp()
     {
         $this->options = $this->getOptions(
-            'Detail\Commanding\Options\ModuleOptions',
+            ModuleOptions::CLASS,
             array(
                 'getCommands',
                 'setCommands',

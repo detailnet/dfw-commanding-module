@@ -2,17 +2,24 @@
 
 namespace Detail\Commanding\Factory\Listener;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Commanding\Listener\LoggingListener;
 
-class LoggingListenerFactory implements FactoryInterface
+class LoggingListenerFactory implements
+    FactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * Create an object
+     *
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     * @return LoggingListener
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $listener = new LoggingListener();
 

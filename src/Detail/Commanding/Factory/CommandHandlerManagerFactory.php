@@ -2,8 +2,9 @@
 
 namespace Detail\Commanding\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Commanding\CommandHandlerManager;
 use Detail\Commanding\Options\ModuleOptions;
@@ -12,14 +13,18 @@ class CommandHandlerManagerFactory implements
     FactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * Create CommandHandlerManager
+     *
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
      * @return CommandHandlerManager
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /** @var ModuleOptions $moduleOptions */
-        $moduleOptions = $serviceLocator->get(ModuleOptions::CLASS);
+        $moduleOptions = $container->get(ModuleOptions::CLASS);
 
-        return new CommandHandlerManager($serviceLocator, $moduleOptions->getCommandHandlerManager());
+        return new CommandHandlerManager($container, $moduleOptions->getCommandHandlerManager());
     }
 }
