@@ -2,7 +2,9 @@
 
 namespace DetailTest\Commanding;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+
+use Zend\Loader\StandardAutoloader;
 
 use Detail\Commanding\Module;
 
@@ -24,9 +26,11 @@ class ModuleTest extends TestCase
 
         $this->assertTrue(is_array($config));
 
-        $this->assertArrayHasKey('Zend\Loader\StandardAutoloader', $config);
-        $this->assertArrayHasKey('namespaces', $config['Zend\Loader\StandardAutoloader']);
-        $this->assertArrayHasKey('Detail\Commanding', $config['Zend\Loader\StandardAutoloader']['namespaces']);
+        $autoloaderClass = StandardAutoloader::CLASS;
+
+        $this->assertArrayHasKey($autoloaderClass, $config);
+        $this->assertArrayHasKey('namespaces', $config[$autoloaderClass]);
+        $this->assertArrayHasKey('Detail\Commanding', $config[$autoloaderClass]['namespaces']);
     }
 
     public function testModuleProvidesConfig()
@@ -36,11 +40,6 @@ class ModuleTest extends TestCase
         $this->assertTrue(is_array($config));
         $this->assertArrayHasKey('detail_commanding', $config);
         $this->assertTrue(is_array($config['detail_commanding']));
-//        $this->assertArrayHasKey('normalizer', $config['detail_commanding']);
-//        $this->assertEquals(
-//            'Detail\Commanding\Normalizer\JMSSerializerBasedNormalizer',
-//            $config['detail_commanding']['normalizer']
-//        );
     }
 
     public function testModuleProvidesControllerConfig()

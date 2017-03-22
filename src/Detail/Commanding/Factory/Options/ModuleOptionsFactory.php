@@ -2,21 +2,27 @@
 
 namespace Detail\Commanding\Factory\Options;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Commanding\Exception\ConfigException;
 use Detail\Commanding\Options\ModuleOptions;
 
-class ModuleOptionsFactory implements FactoryInterface
+class ModuleOptionsFactory implements
+    FactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * Create ModuleOptions
+     *
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
      * @return ModuleOptions
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (!isset($config['detail_commanding'])) {
             throw new ConfigException('Config for Detail\Commanding is not set');

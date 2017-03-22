@@ -127,11 +127,6 @@ class CommandDispatcher implements
 
         $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_DISPATCH, $preEventParams);
 
-        /** @todo Remove when we can break backwards compatibility */
-        if ($continueDispatch) {
-            $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_HANDLE, $preEventParams);
-        }
-
         if (!$continueDispatch) {
             /** @todo Should probably trigger an abort event */
             return null;
@@ -148,8 +143,6 @@ class CommandDispatcher implements
         );
 
         $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_DISPATCH, $postEventParams);
-        /** @todo Remove when we can break backwards compatibility */
-        $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_HANDLE, $postEventParams);
 
         return $commandHandlerResult;
     }

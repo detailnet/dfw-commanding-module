@@ -11,11 +11,6 @@ class CommandDispatcherEvent extends Event
     const EVENT_PRE_DISPATCH = 'dispatch.pre';
     const EVENT_DISPATCH     = 'dispatch';
 
-    /** @deprecated Use CommandDispatcherEvent::EVENT_PRE_DISPATCH */
-    const EVENT_PRE_HANDLE = 'handle.pre';
-    /** @deprecated Use CommandDispatcherEvent::EVENT_DISPATCH */
-    const EVENT_HANDLE     = 'handle';
-
     const PARAM_COMMAND_NAME = 'command_name';
     const PARAM_COMMAND      = 'command';
     const PARAM_RESULT       = 'result';

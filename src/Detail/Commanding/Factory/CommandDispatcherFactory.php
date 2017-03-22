@@ -2,29 +2,34 @@
 
 namespace Detail\Commanding\Factory;
 
+use Interop\Container\ContainerInterface;
+
 use Zend\EventManager\ListenerAggregateInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Commanding\CommandDispatcher;
+use Detail\Commanding\CommandHandlerManager;
 use Detail\Commanding\Exception;
+use Detail\Commanding\Options\ModuleOptions;
 
 class CommandDispatcherFactory implements FactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * Create CommandDispatcher
+     *
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     * @return CommandDispatcher
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var \Detail\Commanding\Options\ModuleOptions $moduleOptions */
-        $moduleOptions = $serviceLocator->get('Detail\Commanding\Options\ModuleOptions');
+        /** @var ModuleOptions $moduleOptions */
+        $moduleOptions = $container->get(ModuleOptions::CLASS);
 
-        /** @var \Detail\Commanding\CommandHandlerManager $commandHandlerManager */
-        $commandHandlerManager = $serviceLocator->get('Detail\Commanding\CommandHandlerManager');
-        $commandHandlerManager->setServiceLocator($serviceLocator);
-
+        /** @var CommandHandlerManager $commandHandlerManager */
+        $commandHandlerManager = $container->get(CommandHandlerManager::CLASS);
         $commandDispatcher = new CommandDispatcher($commandHandlerManager);
-
         $commands = $moduleOptions->getCommands();
 
         foreach ($commands as $command) {
@@ -48,7 +53,7 @@ class CommandDispatcherFactory implements FactoryInterface
         foreach ($listeners as $listenerName) {
             /** @todo Lazy load listeners? */
             /** @var ListenerAggregateInterface $listener */
-            $listener = $serviceLocator->get($listenerName);
+            $listener = $container->get($listenerName);
             $listener->attach($commandDispatcher->getEventManager());
         }
 
