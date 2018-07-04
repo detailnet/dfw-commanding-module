@@ -1,4 +1,4 @@
-# Zend Framework 2 Module for dfw-commanding
+# Zend Framework Module for dfw-commanding
 
 [![Build Status](https://travis-ci.org/detailnet/dfw-commanding-module.svg?branch=master)](https://travis-ci.org/detailnet/dfw-commanding-module)
 [![Coverage Status](https://img.shields.io/coveralls/detailnet/dfw-commanding-module.svg)](https://coveralls.io/r/detailnet/dfw-commanding-module)
@@ -6,10 +6,10 @@
 [![Latest Unstable Version](https://poser.pugx.org/detailnet/dfw-commanding-module/v/unstable.svg)](https://packagist.org/packages/detailnet/dfw-commanding-module)
 
 ## Introduction
-This module integrates the [DETAIL Framework library that implements the command pattern](https://github.com/detailnet/dfw-commanding) with [Zend Framework 2](https://github.com/zendframework/zf2).
+This module integrates the [DETAIL Framework library that implements the command pattern](https://github.com/detailnet/dfw-commanding) with [Zend Framework](https://github.com/zendframework/zendframework).
 
 ## Requirements
-[Zend Framework 2 Skeleton Application](http://www.github.com/zendframework/ZendSkeletonApplication) (or compatible architecture)
+[Zend Framework Skeleton Application](http://www.github.com/zendframework/ZendSkeletonApplication) (or compatible architecture)
 
 ## Installation
 Install the module through [Composer](http://getcomposer.org/) using the following steps:
@@ -21,7 +21,7 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      ```json
      {
          "require": {
-             "detailnet/dfw-commanding-module": "1.x-dev"
+             "detailnet/dfw-commanding-module": "^1.0"
          }
      }
      ```
@@ -40,6 +40,3 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
 
   7. Copy `vendor/detailnet/dfw-commanding-module/config/detail_commanding.local.php.dist` into your application's
      `config/autoload` directory, rename it to `detail_commanding.local.php` and make the appropriate changes.
-
-## Usage
-tbd

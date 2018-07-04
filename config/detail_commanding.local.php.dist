@@ -1,15 +1,15 @@
 <?php
 
-return array(
-    'detail_commanding' => array(
-        'commands' => array(
-            array(
+return [
+    'detail_commanding' => [
+        'commands' => [
+            [
                 'command' => 'Some\Command\Class',
                 'handler' => 'Some\Handler\Class',
-            ),
-        ),
-        'listeners' => array(
+            ],
+        ],
+        'listeners' => [
             'Some/Listener/Class',
-        ),
-    ),
-);
+        ],
+    ],
+];

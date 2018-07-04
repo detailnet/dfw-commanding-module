@@ -28,7 +28,7 @@ class CommandDispatcher implements
     /**
      * @var array
      */
-    protected $eventParams = array();
+    protected $eventParams = [];
 
     /**
      * @param CommandHandlerManager $commandHandlers
@@ -63,14 +63,15 @@ class CommandDispatcher implements
     public function setEventManager(EventManagerInterface $events)
     {
         $events->setIdentifiers(
-            array(
+            [
                 __CLASS__,
                 get_class($this),
-                __NAMESPACE__ . '\CommandDispatcherInterface'
-            )
+                __NAMESPACE__ . '\CommandDispatcherInterface',
+            ]
         );
 
         $this->events = $events;
+
         return $this;
     }
 
@@ -81,6 +82,7 @@ class CommandDispatcher implements
     public function setEventParams(array $params)
     {
         $this->eventParams = $params;
+
         return $this;
     }
 
@@ -120,10 +122,10 @@ class CommandDispatcher implements
             );
         }
 
-        $preEventParams = array(
+        $preEventParams = [
             CommandDispatcherEvent::PARAM_COMMAND_NAME => $commandName,
             CommandDispatcherEvent::PARAM_COMMAND => $command,
-        );
+        ];
 
         $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_DISPATCH, $preEventParams);
 
@@ -137,9 +139,9 @@ class CommandDispatcher implements
 
         $postEventParams = array_merge(
             $preEventParams,
-            array(
-                CommandDispatcherEvent::PARAM_RESULT => $commandHandlerResult
-            )
+            [
+                CommandDispatcherEvent::PARAM_RESULT => $commandHandlerResult,
+            ]
         );
 
         $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_DISPATCH, $postEventParams);
@@ -177,13 +179,16 @@ class CommandDispatcher implements
      * @param array $params
      * @return boolean
      */
-    protected function triggerPreDispatchEvent($name, array $params = array())
+    protected function triggerPreDispatchEvent($name, array $params = [])
     {
         $preEvent = $this->prepareEvent($name, $params);
-        $results = $this->getEventManager()->trigger($preEvent, function ($result) {
-            // Don't dispatch the command when a listener returns false
-            return ($result === false);
-        });
+        $results = $this->getEventManager()->trigger(
+            $preEvent,
+            function ($result) {
+                // Don't dispatch the command when a listener returns false
+                return ($result === false);
+            }
+        );
 
         return $results->last() !== false;
     }
@@ -192,7 +197,7 @@ class CommandDispatcher implements
      * @param string $name
      * @param array $params
      */
-    protected function triggerPostDispatchEvent($name, array $params = array())
+    protected function triggerPostDispatchEvent($name, array $params = [])
     {
         $postEvent = $this->prepareEvent($name, $params);
         $this->getEventManager()->trigger($postEvent);
@@ -206,6 +211,7 @@ class CommandDispatcher implements
     protected function prepareEvent($name, array $params)
     {
         $event = new CommandDispatcherEvent($name, $this, $this->prepareEventParams($params));
+
 //        $event->setQueryParams($this->getQueryParams());
 
         return $event;

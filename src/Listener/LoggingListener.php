@@ -28,7 +28,7 @@ class LoggingListener extends BaseLoggingListener
 
         $this->listeners[] = $events->attach(
             CommandDispatcherEvent::EVENT_DISPATCH,
-            array($this, 'onDispatch'),
+            [$this, 'onDispatch'],
             $priority
         );
     }

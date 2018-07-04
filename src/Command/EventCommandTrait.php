@@ -37,9 +37,9 @@ trait EventCommandTrait
     public function setEventManager(EventManagerInterface $events)
     {
         $events->setIdentifiers(
-            array(
+            [
                 get_class($this),
-            )
+            ]
         );
 
         $this->events = $events;
