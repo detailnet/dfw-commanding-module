@@ -5,11 +5,11 @@ namespace Detail\Commanding\Factory;
 use Interop\Container\ContainerInterface;
 
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Commanding\CommandDispatcher;
 use Detail\Commanding\CommandHandlerManager;
-use Detail\Commanding\Exception;
 use Detail\Commanding\Options\ModuleOptions;
 
 class CommandDispatcherFactory implements FactoryInterface
@@ -34,13 +34,13 @@ class CommandDispatcherFactory implements FactoryInterface
 
         foreach ($commands as $command) {
             if (!isset($command['command'])) {
-                throw new Exception\ConfigException(
+                throw new ServiceNotCreatedException(
                     'Command is missing required configuration option "command"'
                 );
             }
 
             if (!isset($command['handler'])) {
-                throw new Exception\ConfigException(
+                throw new ServiceNotCreatedException(
                     'Command is missing required configuration option "handler"'
                 );
             }

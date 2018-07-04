@@ -2,24 +2,24 @@
 
 namespace Detail\Commanding\Options;
 
-use Detail\Core\Options\AbstractOptions;
+use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions
 {
     /**
      * @var array
      */
-    protected $commandHandlerManager = array();
+    protected $commandHandlerManager = [];
 
     /**
      * @var array
      */
-    protected $commands = array();
+    protected $commands = [];
 
     /**
      * @var array
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * @return array

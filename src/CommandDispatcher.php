@@ -28,7 +28,7 @@ class CommandDispatcher implements
     /**
      * @var array
      */
-    protected $eventParams = array();
+    protected $eventParams = [];
 
     /**
      * @param CommandHandlerManager $commandHandlers
@@ -63,25 +63,24 @@ class CommandDispatcher implements
     public function setEventManager(EventManagerInterface $events)
     {
         $events->setIdentifiers(
-            array(
+            [
                 __CLASS__,
                 get_class($this),
-                __NAMESPACE__ . '\CommandDispatcherInterface'
-            )
+                CommandDispatcherInterface::CLASS,
+            ]
         );
 
         $this->events = $events;
+
         return $this;
     }
 
     /**
      * @param array $params
-     * @return self
      */
     public function setEventParams(array $params)
     {
         $this->eventParams = $params;
-        return $this;
     }
 
     /**
@@ -120,10 +119,10 @@ class CommandDispatcher implements
             );
         }
 
-        $preEventParams = array(
+        $preEventParams = [
             CommandDispatcherEvent::PARAM_COMMAND_NAME => $commandName,
             CommandDispatcherEvent::PARAM_COMMAND => $command,
-        );
+        ];
 
         $continueDispatch = $this->triggerPreDispatchEvent(CommandDispatcherEvent::EVENT_PRE_DISPATCH, $preEventParams);
 
@@ -137,9 +136,9 @@ class CommandDispatcher implements
 
         $postEventParams = array_merge(
             $preEventParams,
-            array(
-                CommandDispatcherEvent::PARAM_RESULT => $commandHandlerResult
-            )
+            [
+                CommandDispatcherEvent::PARAM_RESULT => $commandHandlerResult,
+            ]
         );
 
         $this->triggerPostDispatchEvent(CommandDispatcherEvent::EVENT_DISPATCH, $postEventParams);
@@ -149,19 +148,9 @@ class CommandDispatcher implements
 
     /**
      * @param CommandInterface $command
-     * @return mixed
-     * @deprecated Use dispatch()
-     */
-    public function handle(CommandInterface $command)
-    {
-        return $this->dispatch($command);
-    }
-
-    /**
-     * @param CommandInterface $command
      * @return string
      */
-    protected function getCommandName(CommandInterface $command)
+    private function getCommandName(CommandInterface $command)
     {
         $className = get_class($command);
 
@@ -177,13 +166,16 @@ class CommandDispatcher implements
      * @param array $params
      * @return boolean
      */
-    protected function triggerPreDispatchEvent($name, array $params = array())
+    private function triggerPreDispatchEvent($name, array $params = [])
     {
         $preEvent = $this->prepareEvent($name, $params);
-        $results = $this->getEventManager()->trigger($preEvent, function ($result) {
-            // Don't dispatch the command when a listener returns false
-            return ($result === false);
-        });
+        $results = $this->getEventManager()->triggerEventUntil(
+            function ($result) {
+                // Don't dispatch the command when a listener returns false
+                return ($result === false);
+            },
+            $preEvent
+        );
 
         return $results->last() !== false;
     }
@@ -192,10 +184,10 @@ class CommandDispatcher implements
      * @param string $name
      * @param array $params
      */
-    protected function triggerPostDispatchEvent($name, array $params = array())
+    private function triggerPostDispatchEvent($name, array $params = [])
     {
         $postEvent = $this->prepareEvent($name, $params);
-        $this->getEventManager()->trigger($postEvent);
+        $this->getEventManager()->triggerEvent($postEvent);
     }
 
     /**
@@ -203,7 +195,7 @@ class CommandDispatcher implements
      * @param array $params
      * @return CommandDispatcherEvent
      */
-    protected function prepareEvent($name, array $params)
+    private function prepareEvent($name, array $params)
     {
         $event = new CommandDispatcherEvent($name, $this, $this->prepareEventParams($params));
 //        $event->setQueryParams($this->getQueryParams());
@@ -220,15 +212,11 @@ class CommandDispatcher implements
      * @param array $params
      * @return ArrayObject
      */
-    protected function prepareEventParams(array $params)
+    private function prepareEventParams(array $params)
     {
         $defaultParams = $this->getEventParams();
         $params = array_merge($defaultParams, $params);
 
-        if (empty($params)) {
-            return $params;
-        }
-
-        return $this->getEventManager()->prepareArgs($params);
+        return new ArrayObject($params);
     }
 }

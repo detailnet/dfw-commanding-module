@@ -2,25 +2,13 @@
 
 namespace Detail\Commanding;
 
-use Zend\ServiceManager;
+use Zend\ServiceManager\AbstractPluginManager;
 
 use Detail\Commanding\Handler\CommandHandlerInterface;
 use Detail\Commanding\Exception;
 
-/**
- * Plugin manager implementation for command handlers.
- *
- * Enforces that handlers retrieved are instances of CommandHandlerInterface.
- */
-class CommandHandlerManager extends ServiceManager\AbstractPluginManager
+class CommandHandlerManager extends AbstractPluginManager
 {
-    /**
-     * Whether or not to share by default
-     *
-     * @var bool
-     */
-    protected $shareByDefault = false;
-
     /**
      * {@inheritDoc}
      */
