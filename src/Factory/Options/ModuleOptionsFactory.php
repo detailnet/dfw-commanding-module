@@ -4,9 +4,9 @@ namespace Detail\Commanding\Factory\Options;
 
 use Interop\Container\ContainerInterface;
 
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-use Detail\Commanding\Exception\ConfigException;
 use Detail\Commanding\Options\ModuleOptions;
 
 class ModuleOptionsFactory implements
@@ -25,7 +25,7 @@ class ModuleOptionsFactory implements
         $config = $container->get('Config');
 
         if (!isset($config['detail_commanding'])) {
-            throw new ConfigException('Config for Detail\Commanding is not set');
+            throw new ServiceNotCreatedException('Config for Detail\Commanding is not set');
         }
 
         return new ModuleOptions($config['detail_commanding']);
