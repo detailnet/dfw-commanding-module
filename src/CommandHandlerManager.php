@@ -10,16 +10,19 @@ use Detail\Commanding\Exception;
 class CommandHandlerManager extends AbstractPluginManager
 {
     /**
-     * {@inheritDoc}
+     * Validate an instance
+     *
+     * @param object $instance
+     * @return void
      */
-    public function validatePlugin($plugin)
+    public function validate($instance)
     {
-        if (!$plugin instanceof CommandHandlerInterface) {
+        if (!$instance instanceof CommandHandlerInterface) {
             throw new Exception\RuntimeException(
                 sprintf(
                     'Invalid command handler: Expected instance of %s, got %s',
                     CommandHandlerInterface::CLASS,
-                    is_object($plugin) ? get_class($plugin) : gettype($plugin)
+                    is_object($instance) ? get_class($instance) : gettype($instance)
                 )
             );
         }
